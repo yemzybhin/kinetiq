@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Kinetiq - Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="colorlib-page">
+  <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+
+  <!-- Sidebar -->
+  <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+    <h1 id="colorlib-logo" class="mb-4 mb-md-5">
+      <a href="index.html" style="background-image: url(images/bg_1.jpg);">Kinetiq</a>
+    </h1>
+    <nav id="colorlib-main-menu" role="navigation">
+      <ul>
+        <li class="colorlib-active"><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div id="colorlib-main">
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+      <div class="container px-md-0">
+        <div id="portfolio-container" class="row d-flex no-gutters">
+          <!-- Dynamic portfolio entries go here -->
+        </div>
+        <div class="row d-flex">
+          <div class="col-md-12">
+            <a href="#" class="btn-custom-load d-block w-100 text-center py-4">Load more <span class="fa fa-refresh"></span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div><!-- END COLORLIB-MAIN -->
+</div><!-- END COLORLIB-PAGE -->
+
+<!-- JavaScript Libraries -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Dynamic Portfolio Rendering -->
+<script>
+  const portfolioItems = [
+    {
+      image: "images/work-1.jpg",
+      subheading: "Animation",
+      title: "2D Character Animation",
+      description: "Behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+      link: "single.html",
+      reverse: false
+    },
+    {
+      image: "images/work-2.jpg",
+      subheading: "Nature",
+      title: "Green Leaves",
+      description: "Nature’s symmetry is stunning from every angle. This portfolio shows how light and angle bring leaves to life.",
+      link: "single.html",
+      reverse: true
+    },
+    {
+      image: "images/work-3.jpg",
+      subheading: "Environment",
+      title: "Coal",
+      description: "Deep in the earth, carbon takes a thousand-year journey to become coal. This project captures that transformation.",
+      link: "single.html",
+      reverse: false
+    },
+    {
+      image: "images/work-4.jpg",
+      subheading: "Photography",
+      title: "Top Leaf",
+      description: "Floating above the forest, catching light from above — Top Leaf is a meditation on subtle elevation.",
+      link: "single.html",
+      reverse: true
+    }
+  ];
+
+  function renderPortfolioItem(item) {
+    return `
+      <div class="col-md-12 portfolio-wrap">
+        <div class="row no-gutters align-items-center">
+          <a href="${item.image}" class="col-md-6 ${item.reverse ? 'order-md-last' : ''} img image-popup js-fullheight d-flex align-items-center justify-content-center" style="background-image: url('${item.image}'); background-size: cover; background-position: center;">
+            <div class="icon d-flex align-items-center justify-content-center">
+              <span class="fa fa-expand"></span>
+            </div>
+          </a>
+          <div class="col-md-6">
+            <div class="text pt-5 ${item.reverse ? 'px-md-5 text-md-right' : 'pl-0 px-lg-5 pl-md-4'} ftco-animate">
+              <div class="px-4 px-lg-4">
+                <div class="desc ${item.reverse ? 'text-md-right' : ''}">
+                  <div class="top">
+                    <span class="subheading">${item.subheading}</span>
+                    <h2 class="mb-4"><a href="${item.link}">${item.title}</a></h2>
+                  </div>
+                  <div class="absolute">
+                    <p>${item.description}</p>
+                  </div>
+                  <p><a href="${item.link}" class="custom-btn">View Portfolio</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("portfolio-container");
+    container.innerHTML = portfolioItems.map(renderPortfolioItem).join('');
+  });
+</script>
+
+</body>
+</html>
