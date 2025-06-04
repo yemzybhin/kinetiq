@@ -16,18 +16,24 @@
 	<link rel="stylesheet" href="css/style.css">
 
 	<!-- Custom Style for Video Grid and Loader -->
-	<style>
-		.video-grid {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 10px;
-			padding-top: 20px;
-		}
-		.video-grid iframe {
-			width: calc(50% - 5px);
-			height: 315px;
-			border: none;
-		}
+  <style>
+    .video-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 20px;
+    }
+    .video-grid iframe {
+      width: calc(50% - 5px);
+      height: 315px;
+      border: none;
+    }
+    /* Mobile: one video per row */
+    @media (max-width: 768px) {
+      .video-grid iframe {
+        width: 100%;
+      }
+    }
 		#video-loading {
 			font-weight: bold;
 			font-size: 18px;
