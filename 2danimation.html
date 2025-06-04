@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 
-	<!-- Custom Style for Video Grid and Loader -->
+	<!-- Custom Style for Video Grid -->
   <style>
     .video-grid {
       display: flex;
@@ -28,27 +28,12 @@
       height: 315px;
       border: none;
     }
-    /* Mobile: one video per row */
     @media (max-width: 768px) {
       .video-grid iframe {
         width: 100%;
       }
     }
-		#video-loading {
-			font-weight: bold;
-			font-size: 18px;
-			text-align: center;
-			margin: 20px;
-			border-radius: 10px;
-			background-color: rgba(255, 255, 255, 0.1);
-			color: white;
-			width: calc(100% - 40px);
-			height: 50vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	</style>
+  </style>
 </head>
 <body>
 
@@ -90,25 +75,12 @@
 						<div class="col-lg-12 pb-5 single">
 							<div class="row">
 
-								<!-- 🚀 Loading Message -->
-								<div id="video-loading" class="px-5 mt-4 mb-4">
-									Loading videos, please wait...
-								</div>
-
 								<!-- 🚀 VIDEO GRID -->
-								<div id="video-container" class="video-grid px-5 mt-4" style="display: none;"></div>
+								<div id="video-container" class="video-grid px-5 mt-4"></div>
 
 								<div class="px-5 mt-4">
 									<h1 class="mb-3">2d Character Animation</h1>
 									<p>Bring your ideas to life with stunning 2D animation tailored to your brand. Whether you're looking for explainer videos, engaging character animations, or sleek motion graphics, we turn concepts into compelling visual stories. Our team blends creative storytelling with fluid motion to help businesses, educators, and creators communicate clearly and captivate their audiences. From script to final render — we handle it all.</p>
-									<!-- <div class="tag-widget post-tag-container mb-5 mt-5">
-										<div class="tagcloud">
-											<a href="#" class="tag-cloud-link">Life</a>
-											<a href="#" class="tag-cloud-link">Sport</a>
-											<a href="#" class="tag-cloud-link">Tech</a>
-											<a href="#" class="tag-cloud-link">Travel</a>
-										</div>
-									</div> -->
 								</div>
 
 							</div><!-- END row -->
@@ -143,41 +115,43 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
-	<!-- 🚀 Your Custom Video Script -->
+	<!-- 🚀 Custom Script: Lazy Load Videos One-by-One -->
 	<script>
 		const youtubeVideos = [
 			'https://www.youtube.com/embed/GaqMZFN9Oj8',
 			'https://www.youtube.com/embed/dGJW4GC-9IY',
 			'https://www.youtube.com/embed/2m4-VKBz6bY',
 			'https://www.youtube.com/embed/TSBZAHWQXcY',
-			'https://www.youtube.com/embed/eJ7gqP4OMDs',
 			'https://www.youtube.com/embed/SdgTYb0Ie_8',
 			'https://www.youtube.com/embed/eE0YzTjfp5I',
 			'https://www.youtube.com/embed/AR5YugyM2_Q',
 			'https://www.youtube.com/embed/klpqUVTt4nY',
-			'https://www.youtube.com/embed/5eFJjwIJiRY',
+			'https://www.youtube.com/embed/5eFJjwIJiRY'
 		];
 
 		const container = document.getElementById('video-container');
-		const loadingBox = document.getElementById('video-loading');
-		let loadedCount = 0;
+		container.style.display = 'flex'; // Show container immediately
 
-		youtubeVideos.forEach(url => {
+		let index = 0;
+
+		function loadNextVideo() {
+			if (index >= youtubeVideos.length) return;
+
 			const iframe = document.createElement('iframe');
-			iframe.src = url;
+			iframe.src = youtubeVideos[index];
 			iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 			iframe.allowFullscreen = true;
 
 			iframe.onload = () => {
-				loadedCount++;
-				if (loadedCount === youtubeVideos.length) {
-					loadingBox.style.display = 'none';
-					container.style.display = 'flex';
-				}
+				index++;
+				loadNextVideo(); // Load the next after current finishes
 			};
 
 			container.appendChild(iframe);
-		});
+		}
+
+		// Start loading
+		loadNextVideo();
 	</script>
 
 </body>

@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 
-	<!-- Custom Style for Video Grid and Loader -->
+	<!-- Custom Style for Video Grid -->
   <style>
     .video-grid {
       display: flex;
@@ -28,27 +28,12 @@
       height: 315px;
       border: none;
     }
-    /* Mobile: one video per row */
     @media (max-width: 768px) {
       .video-grid iframe {
         width: 100%;
       }
     }
-		#video-loading {
-			font-weight: bold;
-			font-size: 18px;
-			text-align: center;
-			margin: 20px;
-			border-radius: 10px;
-			background-color: rgba(255, 255, 255, 0.1);
-			color: white;
-			width: calc(100% - 40px);
-			height: 50vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	</style>
+  </style>
 </head>
 <body>
 
@@ -80,7 +65,6 @@
 						</div>
 					</form>
 				</div>
-	
 			</div>
 		</aside>
 
@@ -91,25 +75,10 @@
 						<div class="col-lg-12 pb-5 single">
 							<div class="row">
 
-								<!-- 🚀 Loading Message -->
-								<div id="video-loading" class="px-5 mt-4 mb-4">
-									Loading videos, please wait...
-								</div>
-
-								<!-- 🚀 VIDEO GRID -->
-								<div id="video-container" class="video-grid px-5 mt-4" style="display: none;"></div>
-
+								<div id="video-container" class="video-grid px-5 mt-4"></div>
 								<div class="px-5 mt-4">
 									<h1 class="mb-3">Motion Graphics</h1>
 									<p>Transform static ideas into dynamic visuals with our professional motion graphics services. From 2D to 3D, we craft engaging explainer videos, eye-catching ads, and branded content using industry-standard tools like After Effects and beyond. Whether you're promoting a product, simplifying a concept, or boosting your brand’s visual appeal, our motion graphics deliver impact, clarity, and style.</p>
-									<!-- <div class="tag-widget post-tag-container mb-5 mt-5">
-										<div class="tagcloud">
-											<a href="#" class="tag-cloud-link">Life</a>
-											<a href="#" class="tag-cloud-link">Sport</a>
-											<a href="#" class="tag-cloud-link">Tech</a>
-											<a href="#" class="tag-cloud-link">Travel</a>
-										</div>
-									</div> -->
 								</div>
 
 							</div><!-- END row -->
@@ -144,7 +113,7 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
-	<!-- 🚀 Your Custom Video Script -->
+	<!-- 🚀 Custom Script: Lazy Load Videos One-by-One -->
 	<script>
 		const youtubeVideos = [
 			'https://www.youtube.com/embed/Qep9Kh_faMo',
@@ -156,26 +125,30 @@
             'https://www.youtube.com/embed/7fpj9Ii3j48',
 		];
 
-		const container = document.getElementById('video-container');
-		const loadingBox = document.getElementById('video-loading');
-		let loadedCount = 0;
 
-		youtubeVideos.forEach(url => {
+		const container = document.getElementById('video-container');
+		container.style.display = 'flex'; // Show container immediately
+
+		let index = 0;
+
+		function loadNextVideo() {
+			if (index >= youtubeVideos.length) return;
+
 			const iframe = document.createElement('iframe');
-			iframe.src = url;
+			iframe.src = youtubeVideos[index];
 			iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 			iframe.allowFullscreen = true;
 
 			iframe.onload = () => {
-				loadedCount++;
-				if (loadedCount === youtubeVideos.length) {
-					loadingBox.style.display = 'none';
-					container.style.display = 'flex';
-				}
+				index++;
+				loadNextVideo(); // Load the next after current finishes
 			};
 
 			container.appendChild(iframe);
-		});
+		}
+
+		// Start loading
+		loadNextVideo();
 	</script>
 
 </body>

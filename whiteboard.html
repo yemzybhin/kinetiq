@@ -15,33 +15,25 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 
-	<!-- Custom Style for Video Grid and Loader -->
-<style>
-	.video-grid {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		padding-top: 20px;
-	}
-
-	.video-grid iframe {
-		flex: 1 1 calc(50% - 5px);
-		height: 315px;
-		border: none;
-	}
-
-	/* When only one video, make it full width */
-	.video-grid:has(iframe:only-child) iframe {
-		flex: 1 1 100%;
-	}
-
-	/* When screen is small (mobile), all videos take full width */
-	@media (max-width: 768px) {
-		.video-grid iframe {
-			flex: 1 1 100%;
-		}
-	}
-</style>
+	<!-- Custom Style for Video Grid -->
+  <style>
+    .video-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 20px;
+    }
+    .video-grid iframe {
+      width: calc(50% - 5px);
+      height: 315px;
+      border: none;
+    }
+    @media (max-width: 768px) {
+      .video-grid iframe {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -73,7 +65,6 @@
 						</div>
 					</form>
 				</div>
-		
 			</div>
 		</aside>
 
@@ -84,25 +75,12 @@
 						<div class="col-lg-12 pb-5 single">
 							<div class="row">
 
-								<!-- 🚀 Loading Message -->
-								<div id="video-loading" class="px-5 mt-4 mb-4">
-									Loading videos, please wait...
-								</div>
-
 								<!-- 🚀 VIDEO GRID -->
-								<div id="video-container" class="video-grid px-5 mt-4" style="display: none;"></div>
+								<div id="video-container" class="video-grid px-5 mt-4"></div>
 
 								<div class="px-5 mt-4">
 									<h1 class="mb-3">White Board Animation</h1>
-									<p>Bring your ideas to life with stunning 2D animation tailored to your brand. Whether you're looking for explainer videos, engaging character animations, or sleek motion graphics, we turn concepts into compelling visual stories. Our team blends creative storytelling with fluid motion to help businesses, educators, and creators communicate clearly and captivate their audiences. From script to final render — we handle it all.</p>
-									<!-- <div class="tag-widget post-tag-container mb-5 mt-5">
-										<div class="tagcloud">
-											<a href="#" class="tag-cloud-link">Life</a>
-											<a href="#" class="tag-cloud-link">Sport</a>
-											<a href="#" class="tag-cloud-link">Tech</a>
-											<a href="#" class="tag-cloud-link">Travel</a>
-										</div>
-									</div> -->
+									<p>Bring your ideas to life with our customizable whiteboard animations. Whether you prefer classic pencil-style sketches or full-color painted visuals, we tailor each animation to match your message and style. Ideal for explainer videos, educational content, and storytelling, our whiteboard animations simplify complex concepts while keeping viewers engaged from start to finish.</p>
 								</div>
 
 							</div><!-- END row -->
@@ -137,32 +115,35 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
-	<!-- 🚀 Your Custom Video Script -->
+	<!-- 🚀 Custom Script: Lazy Load Videos One-by-One -->
 	<script>
 		const youtubeVideos = [
 			'https://www.youtube.com/embed/Mmrx0OnfRmA'
 		];
 
 		const container = document.getElementById('video-container');
-		const loadingBox = document.getElementById('video-loading');
-		let loadedCount = 0;
+		container.style.display = 'flex'; // Show container immediately
 
-		youtubeVideos.forEach(url => {
+		let index = 0;
+
+		function loadNextVideo() {
+			if (index >= youtubeVideos.length) return;
+
 			const iframe = document.createElement('iframe');
-			iframe.src = url;
+			iframe.src = youtubeVideos[index];
 			iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
 			iframe.allowFullscreen = true;
 
 			iframe.onload = () => {
-				loadedCount++;
-				if (loadedCount === youtubeVideos.length) {
-					loadingBox.style.display = 'none';
-					container.style.display = 'flex';
-				}
+				index++;
+				loadNextVideo(); // Load the next after current finishes
 			};
 
 			container.appendChild(iframe);
-		});
+		}
+
+		// Start loading
+		loadNextVideo();
 	</script>
 
 </body>
